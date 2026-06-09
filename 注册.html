@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录/注册</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    console.log(`%c
+    Author: luoyiyang
+    CreateAt: 2024/12/11
+    `,)
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="form-warp">
+      <form class="sign-in-form">
+        <h2 class="form-title">登录</h2>
+        <input placeholder="用户名" />
+        <input type="password" placeholder="密码" />
+        <div id="submit-btn">立即登录</div>
+      </form>
+      <form class="sign-up-form">
+        <h2 class="form-title">注册</h2>
+        <input placeholder="用户名" />
+        <input type="password" placeholder="密码" />
+        <div id="submit-bts">立即注册</div>
+      </form>
+    </div>
+    <div class="desc-warp">
+      <div class="desc-warp-item sign-up-desc">
+        <div class="content">
+          <button id="sign-up-btn" formmethod="post">注册</button>
+        </div>
+        <img src="fonts/log.svg" alt="">
+      </div>
+      <div class="desc-warp-item sign-in-desc">
+        <div class="content">
+          <button id="sign-in-btn" formmethod="post">登录</button>
+        </div>
+        <img src="fonts/register.svg" alt="">
+      </div>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>

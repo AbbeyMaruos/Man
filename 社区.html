@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>社区</title>
+  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .top-content {
+      min-height: 100vh;
+      background: linear-gradient(300deg, #ffaa00, #ffffff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      gap: 40px;
+      text-align: center;
+    }
+
+    .top-content h1 {
+      font-size: 42px;
+      color: #333;
+      margin: 0;
+    }
+
+    .top-content img {
+      max-width: 100%;
+      max-height: 420px;
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+      object-fit: cover;
+    }
+
+    .comment-section {
+      background-color: #fff;
+      padding: 50px 20px 80px;
+      box-shadow: 0 -8px 25px rgba(0,0,0,0.08);
+    }
+
+    #waline {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* 移动端优化 */
+    @media (max-width: 768px) {
+      .top-content h1 {
+        font-size: 32px;
+      }
+      .top-content {
+        padding: 40px 15px;
+      }
+    }
+	  /* === Waline 样式覆盖 === */
+	  :root {
+	    /* 基本颜色 */
+	    --waline-theme-color: #aa5500;     /* 主色调 */
+	    --waline-active-color: #2ecc71;
+	    --waline-color: #333;
+	    --waline-bg-color: #ffffff;        /* 评论区背景 */
+	    --waline-bg-color-light: #f8f9fa;
+	    --waline-border-color: #e0e0e0;
+	
+	    /* 字体 */
+	    --waline-font-size: 16px;
+		--waline-font-family: ;
+	
+	    /* 圆角 & 阴影 */
+	    --waline-avatar-radius: 50%;
+	    --waline-border: 1px solid var(--waline-border-color);
+	    --waline-box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+	  }
+	
+	  /* 暗黑模式（如果你用了 dark: 'auto'） */
+	  @media (prefers-color-scheme: dark) {
+	    :root {
+	      --waline-bg-color: #1e1e1e;
+	      --waline-color: #aa55ff;
+	      --waline-border-color: #444;
+	    }
+	  }
+	
+	  /* 针对评论区的额外调整 */
+	  #waline {
+	    background: var(--waline-bg-color);
+	    border-radius: 12px;
+	    padding: 30px 20px;
+		background: linear-gradient(300deg, #ffaa00, #ffffff);
+		font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif !important;
+		font-weight: 500 !important;
+		line-height: 1.7 !important;
+	  }
+	
+	.wl-comment .wl-content,
+	  .wl-editor,
+	  .wl-meta {
+	    font-weight: 500 !important;
+	  }
+	.wl-editor textarea {
+	      font-weight: 500 !important;
+		}
+		
+	  /* 如果想改具体部分（如输入框、按钮等） */
+	  .wl-editor {
+	    background: #ffffff;
+	    border-radius: 8px;
+	  }
+	  #backButton {
+	        position: fixed;
+	        bottom: 30px;
+	        left: 30px;
+	        background: #aa5500;
+	        color: white;
+	        padding: 12px 24px;
+	        border: none;
+	        border-radius: 50px;
+	        font-size: 16px;
+	        font-weight: 600;
+	        cursor: pointer;
+	        box-shadow: 0 6px 20px rgba(170, 85, 0, 0.3);
+	        z-index: 100;
+	        display: flex;
+	        align-items: center;
+	        gap: 8px;
+	        transition: all 0.3s;
+	      }
+	  
+	      #backButton:hover {
+	        background: #d2691e;
+	        transform: translateY(-3px);
+	        box-shadow: 0 10px 25px rgba(170, 85, 0, 0.4);
+	      }
+	  
+	      @media (max-width: 768px) {
+	        .back-btn {
+	          bottom: 20px;
+	          left: 20px;
+	          padding: 10px 20px;
+	          font-size: 15px;
+	        }
+	      }
+  </style>
+</head>
+<body>
+  <!-- 顶部图片区域 -->
+  <div class="top-content">
+    <h1>社区</h1>
+    
+    <!-- 在这里放你的图片，可以多张 -->
+    <img src="images/preview.jpg" alt="顶部装饰图1">
+	<img src="images/preview.jpg" alt="顶部装饰图1">
+    <!-- <img src="你的顶部图片地址2.jpg" alt="顶部装饰图2"> -->
+    <!-- <img src="你的顶部图片地址3.jpg" alt="顶部装饰图3"> -->
+  </div>
+
+  <!-- 评论区置底 -->
+  <div class="comment-section">
+    <div id="waline"></div>
+  </div>
+	<button id="backButton" onclick="click()">
+	    ← 返回
+	  </button>
+</body>
+	<script type="module">
+	    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+	
+	    init({
+	      el: '#waline',
+	      serverURL: 'https://aabbcccc123666.xyz/',
+	    });
+		document.getElementById('backButton').addEventListener('click', function() {
+      // 方法一：返回指定页面（推荐修改这里）
+      window.location.href = 'index.html';
+	  });
+	  </script>
+</html>
