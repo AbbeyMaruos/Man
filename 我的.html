@@ -42,7 +42,7 @@
 		      box-shadow: 0 10px 25px rgba(170, 85, 0, 0.4);
 		    }
 		
-		    @media (max-width: 368px) {
+		    @media (max-width: 768px) {
 		      #backButton {
 		       bottom: 70px;
 		        left: 20px;
@@ -288,7 +288,7 @@
         function logout() {
             if (confirm('确定要退出登录吗？')) {
                 showToast('已退出登录');
-                setTimeout(() => window.location.href = '#', 800);
+                setTimeout(() => window.location.href = 'index.html', 1600);
             }
         }
 		document.getElementById('backButton').addEventListener('click', function() {
