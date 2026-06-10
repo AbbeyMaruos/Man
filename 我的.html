@@ -18,7 +18,7 @@
         }
 		#backButton {
 		      position: fixed;
-		      bottom: 30px;
+		      bottom: 73px;
 		      left: 30px;
 		      background: #aa5500;
 		      color: white;
@@ -42,12 +42,13 @@
 		      box-shadow: 0 10px 25px rgba(170, 85, 0, 0.4);
 		    }
 		
-		    @media (max-width: 768px) {
-		      .back-btn {
-		        bottom: 20px;
+		    @media (max-width: 368px) {
+		      #backButton {
+		       bottom: 70px;
 		        left: 20px;
 		        padding: 10px 20px;
 		        font-size: 15px;
+				display: none;
 		      }
 		    }
     </style>
@@ -244,11 +245,11 @@
     <!-- 底部导航 (移动端) -->
     <div class="fixed bottom-0 left-0 right-0 bg-white border-t md:hidden">
         <div class="max-w-7xl mx-auto grid grid-cols-4 text-xs">
-            <a href="#" class="flex flex-col items-center py-3 text-emerald-600">
+            <a href="index.html" class="flex flex-col items-center py-3 text-emerald-600">
                 <i class="fa-solid fa-house text-xl"></i>
                 <span class="mt-1">首页</span>
             </a>
-            <a href="appointment-booking.html" class="flex flex-col items-center py-3 text-stone-500">
+            <a href="预约.html" class="flex flex-col items-center py-3 text-stone-500">
                 <i class="fa-solid fa-calendar text-xl"></i>
                 <span class="mt-1">预约</span>
             </a>
