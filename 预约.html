@@ -67,6 +67,40 @@
         .nav-link:hover:after {
             width: 100%;
         }
+		#backButton {
+		      position: fixed;
+		      bottom: 30px;
+		      left: 30px;
+		      background: #aa5500;
+		      color: white;
+		      padding: 12px 24px;
+		      border: none;
+		      border-radius: 50px;
+		      font-size: 16px;
+		      font-weight: 600;
+		      cursor: pointer;
+		      box-shadow: 0 6px 20px rgba(170, 85, 0, 0.3);
+		      z-index: 100;
+		      display: flex;
+		      align-items: center;
+		      gap: 8px;
+		      transition: all 0.3s;
+		    }
+		
+		    #backButton:hover {
+		      background: #d2691e;
+		      transform: translateY(-3px);
+		      box-shadow: 0 10px 25px rgba(170, 85, 0, 0.4);
+		    }
+		
+		    @media (max-width: 768px) {
+		      .back-btn {
+		        bottom: 20px;
+		        left: 20px;
+		        padding: 10px 20px;
+		        font-size: 15px;
+		      }
+		    }
     </style>
 </head>
 <body class="bg-stone-50 text-stone-800">
@@ -398,7 +432,11 @@
             </div>
         </div>
     </section>
-
+	
+	<button id="backButton" onclick="click()">
+	    ← 返回
+	  </button>
+	  
     <!-- Footer -->
     <footer class="bg-stone-900 text-white py-20">
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
@@ -549,6 +587,11 @@
         window.selectService = function(btn) {
             alert('服务已选中！请在预约表单中进一步确认。');
         };
+		
+		document.getElementById('backButton').addEventListener('click', function() {
+		// 方法一：返回指定页面（推荐修改这里）
+		window.location.href = 'index.html';
+		});
     </script>
 </body>
 </html>
