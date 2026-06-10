@@ -1,9 +1,300 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-	</head>
-	<body>
-	</body>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>悦动象限 健身 - 个人中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+        
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .heading-font { font-family: 'Playfair Display', sans-serif; }
+
+        .nav-active {
+            border-bottom: 3px solid #10b981;
+            color: #10b981;
+        }
+		#backButton {
+		      position: fixed;
+		      bottom: 30px;
+		      left: 30px;
+		      background: #aa5500;
+		      color: white;
+		      padding: 12px 24px;
+		      border: none;
+		      border-radius: 50px;
+		      font-size: 16px;
+		      font-weight: 600;
+		      cursor: pointer;
+		      box-shadow: 0 6px 20px rgba(170, 85, 0, 0.3);
+		      z-index: 100;
+		      display: flex;
+		      align-items: center;
+		      gap: 8px;
+		      transition: all 0.3s;
+		    }
+		
+		    #backButton:hover {
+		      background: #d2691e;
+		      transform: translateY(-3px);
+		      box-shadow: 0 10px 25px rgba(170, 85, 0, 0.4);
+		    }
+		
+		    @media (max-width: 768px) {
+		      .back-btn {
+		        bottom: 20px;
+		        left: 20px;
+		        padding: 10px 20px;
+		        font-size: 15px;
+		      }
+		    }
+    </style>
+</head>
+<body class="bg-stone-50">
+
+    <!-- 顶部导航 -->
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-8">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-dumbbell text-3xl text-emerald-600"></i>
+                        <span class="heading-font text-2xl font-bold tracking-tight">悦动象限</span>
+                    </div>
+                    <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                        <a href="#" class="nav-active text-emerald-600">个人中心</a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-3 bg-stone-100 rounded-full pl-2 pr-6 py-1.5">
+                        <img src="https://picsum.photos/id/64/128/128" alt="用户头像" 
+                             class="w-8 h-8 rounded-full object-cover ring-2 ring-emerald-200">
+                        <div>
+                            <p class="text-sm font-semibold">张健身</p>
+                            <p class="text-xs text-emerald-600">高级会员</p>
+                        </div>
+                    </div>
+                    <button onclick="logout()" 
+                            class="px-5 py-2 text-sm font-medium text-stone-700 hover:bg-stone-100 rounded-xl transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        退出
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-6 py-10">
+        <div class="flex justify-between items-end mb-10">
+            <div>
+                <h1 class="heading-font text-4xl font-bold text-stone-900">个人中心</h1>
+                <p class="text-stone-500 mt-2">欢迎回来，张健身！今天是你的第 47 天健身之旅 💪</p>
+            </div>
+            <div class="text-right">
+                <div class="text-emerald-600 text-sm font-medium">会员有效期至 2026.12.31</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- 左侧信息栏 -->
+            <div class="lg:col-span-4 space-y-6">
+                <!-- 个人信息卡 -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm">
+                    <div class="flex items-center gap-6">
+                        <img src="https://picsum.photos/id/64/200/200" alt="头像" 
+                             class="w-24 h-24 rounded-2xl object-cover ring-4 ring-emerald-100">
+                        <div>
+                            <h2 class="text-2xl font-semibold">张健身</h2>
+                            <p class="text-emerald-600">ID: FF-20230047</p>
+                            <div class="flex items-center gap-2 mt-3">
+                                <div class="bg-emerald-100 text-emerald-700 text-xs px-3 py-1 rounded-full font-medium">高级会员</div>
+                                <div class="bg-amber-100 text-amber-700 text-xs px-3 py-1 rounded-full font-medium">已打卡 47 天</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 grid grid-cols-3 gap-4 text-center">
+                        <div>
+                            <div class="text-3xl font-semibold text-emerald-600">178</div>
+                            <div class="text-xs text-stone-500">当前体重 kg</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-semibold text-emerald-600">12%</div>
+                            <div class="text-xs text-stone-500">体脂率</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-semibold text-emerald-600">92</div>
+                            <div class="text-xs text-stone-500">训练次数</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 近期预约 -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-semibold text-lg">我的预约</h3>
+                        <a href="appointment-booking.html" class="text-emerald-600 text-sm hover:underline flex items-center gap-1">
+                            预约更多 <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex gap-4 bg-stone-50 rounded-2xl p-4">
+                            <div class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-dumbbell text-2xl text-emerald-600"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="font-medium">私教课 - 力量训练</div>
+                                <div class="text-sm text-stone-500">6月12日 周四  19:00 - 20:00</div>
+                                <div class="text-emerald-600 text-sm mt-1">教练：李教练</div>
+                            </div>
+                            <div class="text-right text-xs">
+                                <span class="inline-block bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full">已确认</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧主要内容 -->
+            <div class="lg:col-span-8 space-y-8">
+                <!-- 进度卡 -->
+                <div class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-3xl p-8 shadow-sm">
+                    <div class="flex justify-between">
+                        <div>
+                            <h3 class="text-lg opacity-90">本月训练目标</h3>
+                            <div class="text-5xl font-bold mt-2">12 / 16</div>
+                            <div class="text-sm opacity-75">次训练</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-6xl">🏋️</div>
+                        </div>
+                    </div>
+                    <div class="mt-6 h-3 bg-white/30 rounded-full overflow-hidden">
+                        <div class="h-3 bg-white w-[75%] rounded-full"></div>
+                    </div>
+                </div>
+
+                <!-- 我的课程 -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm">
+                    <h3 class="font-semibold text-xl mb-6 flex items-center gap-3">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        我的课程记录
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="border border-stone-100 rounded-2xl p-6 hover:border-emerald-200 transition-colors">
+                            <div class="flex justify-between">
+                                <div>
+                                    <div class="font-medium">HIIT 高强度间歇训练</div>
+                                    <div class="text-sm text-stone-500">6月8日 • 45分钟</div>
+                                </div>
+                                <span class="text-emerald-600 text-xs bg-emerald-50 px-4 py-2 rounded-2xl h-fit">已完成</span>
+                            </div>
+                            <div class="mt-6 text-xs text-stone-400">消耗热量 ≈ 620 kcal</div>
+                        </div>
+                        <div class="border border-stone-100 rounded-2xl p-6 hover:border-emerald-200 transition-colors">
+                            <div class="flex justify-between">
+                                <div>
+                                    <div class="font-medium">瑜伽 • 核心激活</div>
+                                    <div class="text-sm text-stone-500">6月5日 • 60分钟</div>
+                                </div>
+                                <span class="text-emerald-600 text-xs bg-emerald-50 px-4 py-2 rounded-2xl h-fit">已完成</span>
+                            </div>
+                            <div class="mt-6 text-xs text-stone-400">消耗热量 ≈ 380 kcal</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 账户信息 -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm">
+                    <h3 class="font-semibold text-xl mb-6">账户与设置</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <button onclick="showToast('已复制会员卡号')" 
+                                class="flex items-center justify-between p-6 border border-stone-200 hover:border-emerald-300 rounded-3xl group">
+                            <div class="flex items-center gap-4">
+                                <i class="fa-solid fa-id-card text-3xl text-emerald-500"></i>
+                                <div class="text-left">
+                                    <div class="font-medium">会员卡</div>
+                                    <div class="text-stone-500 text-sm">FF-20230047</div>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-copy opacity-0 group-hover:opacity-100 transition-all"></i>
+                        </button>
+                        
+                        <button onclick="showToast('功能开发中')" 
+                                class="flex items-center justify-between p-6 border border-stone-200 hover:border-emerald-300 rounded-3xl group">
+                            <div class="flex items-center gap-4">
+                                <i class="fa-solid fa-chart-line text-3xl text-emerald-500"></i>
+                                <div class="text-left">
+                                    <div class="font-medium">健身数据</div>
+                                    <div class="text-stone-500 text-sm">查看详细报告</div>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-arrow-right opacity-0 group-hover:opacity-100 transition-all"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航 (移动端) -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t md:hidden">
+        <div class="max-w-7xl mx-auto grid grid-cols-4 text-xs">
+            <a href="#" class="flex flex-col items-center py-3 text-emerald-600">
+                <i class="fa-solid fa-house text-xl"></i>
+                <span class="mt-1">首页</span>
+            </a>
+            <a href="appointment-booking.html" class="flex flex-col items-center py-3 text-stone-500">
+                <i class="fa-solid fa-calendar text-xl"></i>
+                <span class="mt-1">预约</span>
+            </a>
+            <a href="#" class="flex flex-col items-center py-3 text-stone-500">
+                <i class="fa-solid fa-chart-simple text-xl"></i>
+                <span class="mt-1">数据</span>
+            </a>
+            <a href="#" class="flex flex-col items-center py-3 text-stone-500 nav-active">
+                <i class="fa-solid fa-user text-xl"></i>
+                <span class="mt-1">我的</span>
+            </a>
+        </div>
+    </div>
+	<button id="backButton" onclick="click()">
+	    ← 返回
+	  </button>
+
+    <script>
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-6 right-6 bg-stone-800 text-white px-6 py-3 rounded-2xl shadow-xl flex items-center gap-3 z-50';
+            toast.innerHTML = `
+                <i class="fa-solid fa-check-circle text-emerald-400"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.transition = 'all 0.3s';
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                showToast('已退出登录');
+                setTimeout(() => window.location.href = '#', 800);
+            }
+        }
+		document.getElementById('backButton').addEventListener('click', function() {
+		// 方法一：返回指定页面（推荐修改这里）
+		window.location.href = 'index.html';
+		});
+        // Tailwind script already included
+    </script>
+</body>
 </html>

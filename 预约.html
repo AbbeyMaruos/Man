@@ -1,23 +1,554 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>预约</title>
-	</head>
-	<body>
-		<button id="backButton" onclick="prompt()">预约</button>
-	</body>
-	<style>
-		
-		/* button {
-			width: 20px;
-			height: 20px;
-		} */
-	</style>
-	<script>
-		document.getElementById('backButton').addEventListener('click', function() {
-		// 方法一：返回指定页面（推荐修改这里）
-		window.location.href = 'index.html';
-		});
-	</script>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>悦动象限 健身预约 - 专业健身房预约系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+        
+        :root {
+            --primary: #10b981;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        
+        .heading-font {
+            font-family: 'Playfair Display', sans-serif;
+        }
+
+        .hero-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)), url('https://picsum.photos/id/1015/2000/1200') center/cover no-repeat;
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .time-slot {
+            transition: all 0.2s ease;
+        }
+        
+        .time-slot:hover {
+            background-color: #f5e8d3;
+            border-color: #d4a373;
+        }
+        
+        .time-slot.selected {
+            background-color: #d4a373;
+            color: white;
+            border-color: #d4a373;
+        }
+
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #d4a373;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold">💪</div>
+                <div>
+                    <span class="heading-font text-2xl font-semibold tracking-tight text-emerald-700">悦动象限 健身</span>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#services" class="nav-link text-stone-700 hover:text-emerald-600">服务项目</a>
+                <a href="#booking" class="nav-link text-stone-700 hover:text-emerald-600">立即预约</a>
+                <a href="#about" class="nav-link text-stone-700 hover:text-emerald-600">关于我们</a>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <button onclick="toggleMobileMenu()" 
+                        class="md:hidden text-2xl text-stone-700">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="#booking" 
+                   class="px-6 py-2.5 bg-amber-700 hover:bg-amber-800 text-white rounded-full text-sm font-semibold transition-colors flex items-center gap-2">
+                    <i class="fas fa-calendar"></i>
+                    <span>预约</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+            <div class="px-6 py-6 flex flex-col space-y-4 text-lg">
+                <a href="#services" class="py-2 text-stone-700">服务项目</a>
+                <a href="#booking" class="py-2 text-stone-700">立即预约</a>
+                <a href="#about" class="py-2 text-stone-700">关于我们</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg h-screen flex items-center text-white relative">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-6 py-2 rounded-full mb-6">
+                <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                <span class="text-sm font-medium tracking-widest">专业 · 科学 · 强身</span>
+            </div>
+            
+            <h1 class="heading-font text-6xl md:text-7xl font-bold leading-tight mb-6">
+                预约您的<br>健身时刻
+            </h1>
+            <p class="text-xl md:text-2xl text-white/90 max-w-md mx-auto mb-10">
+                专业健身指导 · 科学训练计划 · 高效成果可见
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#booking" 
+                   class="px-10 py-4 bg-white text-stone-900 rounded-2xl font-semibold text-lg inline-flex items-center justify-center gap-3 hover:bg-amber-100 transition-all group">
+                    <span>立即预约</span>
+                    <i class="fas fa-arrow-right group-active:translate-x-1 transition"></i>
+                </a>
+                <a href="#services" 
+                   class="px-10 py-4 border border-white/70 hover:bg-white/10 rounded-2xl font-medium text-lg transition-all">
+                    浏览服务
+                </a>
+            </div>
+            
+            <div class="mt-16 grid grid-cols-3 gap-8 max-w-xs mx-auto text-center">
+                <div>
+                    <div class="text-3xl font-semibold">98%</div>
+                    <div class="text-sm text-white/70 mt-1">客户满意度</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-semibold">500+</div>
+                    <div class="text-sm text-white/70 mt-1">专业教练</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-semibold">24h</div>
+                    <div class="text-sm text-white/70 mt-1">快速响应</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+            <div class="text-white/60 text-xs tracking-widest mb-2">SCROLL</div>
+            <i class="fas fa-chevron-down animate-bounce text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-2 text-emerald-600 mb-3">
+                    <i class="fas fa-dumbbell"></i>
+                    <span class="uppercase tracking-widest text-sm font-medium">精选课程</span>
+                </div>
+                <h2 class="heading-font text-5xl font-semibold">我们的专业课程</h2>
+                <p class="mt-4 text-stone-600 max-w-md mx-auto">科学训练 · 专业教练 · 成就更好自己</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="card-hover bg-white border border-stone-100 rounded-3xl overflow-hidden group">
+                    <div class="h-64 bg-[url('https://picsum.photos/id/1016/800/600')] bg-cover"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-xs font-medium text-emerald-600">私教课程</span>
+                                <h3 class="text-2xl font-semibold mt-1">一对一私教</h3>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-2xl font-semibold text-emerald-600">¥298/节</span>
+                            </div>
+                        </div>
+                        <p class="text-stone-600 mt-4 line-clamp-3">深度补水，改善肌肤暗沉，恢复光泽弹润。适合所有肤质。</p>
+                        <div class="mt-6 flex items-center justify-between text-sm">
+                            <div class="flex items-center gap-1 text-emerald-600">
+                                <i class="fas fa-clock"></i>
+                                <span>60分钟</span>
+                            </div>
+                            <button onclick="selectService(this)" 
+                                    class="px-5 py-2 text-sm border border-emerald-600 text-emerald-600 hover:bg-amber-700 hover:text-white rounded-2xl transition-colors">
+                                选择
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="card-hover bg-white border border-stone-100 rounded-3xl overflow-hidden group">
+                    <div class="h-64 bg-[url('https://picsum.photos/id/1027/800/600')] bg-cover"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-xs font-medium text-emerald-600">团体课程</span>
+                                <h3 class="text-2xl font-semibold mt-1">HIIT 高强度间歇</h3>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-2xl font-semibold text-emerald-600">¥89/节</span>
+                            </div>
+                        </div>
+                        <p class="text-stone-600 mt-4 line-clamp-3">高强度燃脂训练，结合有氧和力量，提升心肺耐力与代谢率。团体氛围超燃！</p>
+                        <div class="mt-6 flex items-center justify-between text-sm">
+                            <div class="flex items-center gap-1 text-emerald-600">
+                                <i class="fas fa-clock"></i>
+                                <span>90分钟</span>
+                            </div>
+                            <button onclick="selectService(this)" 
+                                    class="px-5 py-2 text-sm border border-emerald-600 text-emerald-600 hover:bg-amber-700 hover:text-white rounded-2xl transition-colors">
+                                选择
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="card-hover bg-white border border-stone-100 rounded-3xl overflow-hidden group">
+                    <div class="h-64 bg-[url('https://picsum.photos/id/106/800/600')] bg-cover"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-xs font-medium text-emerald-600">专项训练</span>
+                                <h3 class="text-2xl font-semibold mt-1">瑜伽 & 核心力量</h3>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-2xl font-semibold text-emerald-600">¥129/节</span>
+                            </div>
+                        </div>
+                        <p class="text-stone-600 mt-4 line-clamp-3">专注核心稳定与柔韧性训练，改善体态，缓解久坐带来的不适，适合全年龄段。</p>
+                        <div class="mt-6 flex items-center justify-between text-sm">
+                            <div class="flex items-center gap-1 text-emerald-600">
+                                <i class="fas fa-clock"></i>
+                                <span>120分钟</span>
+                            </div>
+                            <button onclick="selectService(this)" 
+                                    class="px-5 py-2 text-sm border border-emerald-600 text-emerald-600 hover:bg-amber-700 hover:text-white rounded-2xl transition-colors">
+                                选择
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="py-24 bg-stone-100">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+                <div class="grid md:grid-cols-5">
+                    <!-- Left side: Calendar & Info -->
+                    <div class="md:col-span-3 p-10 bg-stone-50">
+                        <h2 class="heading-font text-4xl font-semibold mb-2">预约您的专属时间</h2>
+                        <p class="text-stone-600 mb-8">请选择服务、日期和时间</p>
+                        
+                        <!-- Service Selection -->
+                        <div class="mb-8">
+                            <label class="block text-sm font-medium text-stone-500 mb-3">选择服务</label>
+                            <div id="serviceSelect" class="grid grid-cols-1 gap-3">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                        
+                        <!-- Date -->
+                        <div class="mb-8">
+                            <label class="block text-sm font-medium text-stone-500 mb-3">选择日期</label>
+                            <input type="date" id="dateInput" 
+                                   class="w-full px-6 py-4 border border-stone-200 rounded-2xl focus:outline-none focus:border-emerald-600 text-lg">
+                        </div>
+                        
+                        <!-- Time Slots -->
+                        <div>
+                            <label class="block text-sm font-medium text-stone-500 mb-3">选择时间</label>
+                            <div id="timeSlots" class="grid grid-cols-3 gap-3">
+                                <!-- JS populated -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right side: Form -->
+                    <div class="md:col-span-2 bg-white p-10 flex flex-col">
+                        <h3 class="text-2xl font-semibold mb-8">填写预约信息</h3>
+                        
+                        <form id="bookingForm" onsubmit="handleSubmit(event)" class="flex-1 flex flex-col">
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-xs uppercase tracking-widest text-stone-500 mb-2">您的姓名</label>
+                                    <input type="text" id="name" required
+                                           class="w-full px-5 py-4 border border-stone-200 rounded-2xl focus:outline-none focus:border-amber-400">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-xs uppercase tracking-widest text-stone-500 mb-2">手机号码</label>
+                                    <input type="tel" id="phone" required
+                                           class="w-full px-5 py-4 border border-stone-200 rounded-2xl focus:outline-none focus:border-amber-400">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-xs uppercase tracking-widest text-stone-500 mb-2">电子邮箱</label>
+                                    <input type="email" id="email" 
+                                           class="w-full px-5 py-4 border border-stone-200 rounded-2xl focus:outline-none focus:border-amber-400">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-xs uppercase tracking-widest text-stone-500 mb-2">备注</label>
+                                    <textarea id="notes" rows="3"
+                                        class="w-full px-5 py-4 border border-stone-200 rounded-2xl focus:outline-none focus:border-amber-400 resize-none"></textarea>
+                                </div>
+                            </div>
+                            
+                            <button type="submit"
+                                    class="mt-auto w-full py-5 bg-gradient-to-r from-amber-700 to-amber-600 text-white rounded-2xl font-semibold text-lg shadow-inner active:scale-[0.985] transition-all flex items-center justify-center gap-3">
+                                <i class="fas fa-check"></i>
+                                <span>确认预约</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8 text-stone-500 text-sm flex items-center justify-center gap-8">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>信息安全保障</span>
+                </div>
+                <div>·</div>
+                <div>24小时内确认</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About / Testimonials -->
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-12 gap-16 items-center">
+                <div class="md:col-span-5">
+                    <div class="sticky top-24">
+                        <span class="text-emerald-600 font-medium">为什么选择我们</span>
+                        <h2 class="heading-font text-5xl leading-none font-semibold mt-4">专业教练<br>助你突破自我</h2>
+                        <p class="mt-8 text-lg text-stone-600">我们拥有持证专业教练团队和先进健身设备，每一次训练都科学高效，成果可见。</p>
+                        
+                        <div class="mt-12 flex gap-8">
+                            <div>
+                                <div class="text-4xl font-semibold text-emerald-600">4.98</div>
+                                <div class="text-sm">平均评分</div>
+                            </div>
+                            <div>
+                                <div class="text-4xl font-semibold text-emerald-600">1200+</div>
+                                <div class="text-sm">预约用户</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:col-span-7 space-y-8">
+                    <!-- Testimonial cards -->
+                    <div class="bg-stone-50 p-8 rounded-3xl">
+                        <div class="flex gap-1 text-amber-400 mb-6">
+                            ★★★★☆
+                        </div>
+                        <p class="italic text-lg">"服务非常专业，环境优雅舒适。预约流程简单快捷，技师手法一流！强烈推荐！"</p>
+                        <div class="mt-8 flex items-center gap-4">
+                            <div class="w-12 h-12 bg-stone-300 rounded-2xl"></div>
+                            <div>
+                                <div class="font-medium">李小姐</div>
+                                <div class="text-sm text-stone-500">VIP会员</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-stone-50 p-8 rounded-3xl">
+                        <div class="flex gap-1 text-amber-400 mb-6">
+                            ★★★★★
+                        </div>
+                        <p class="italic text-lg">"HIIT课程燃脂效果显著，氛围超好！预约很方便，教练鼓励性强，坚持下来感觉精力满满！"</p>
+                        <div class="mt-8 flex items-center gap-4">
+                            <div class="w-12 h-12 bg-stone-300 rounded-2xl"></div>
+                            <div>
+                                <div class="font-medium">王女士</div>
+                                <div class="text-sm text-stone-500">白领</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-white py-20">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-9 h-9 bg-amber-700 rounded-2xl flex items-center justify-center text-xl">悦</div>
+                    <span class="heading-font text-3xl">悦动象限 健身</span>
+                </div>
+                <p class="text-stone-400">让每一次相遇，都成为美丽的开始。</p>
+            </div>
+            
+            <div>
+                <div class="font-medium mb-6">联系我们</div>
+                <div class="space-y-3 text-stone-400">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-phone w-5"></i>
+                        <span>000000000</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-envelope w-5"></i>
+                        <span>marco@eduprivacy.dpdns.org</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-map-marker-alt w-5"></i>
+                        <span>上海市xxxxxx</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="font-medium mb-6">营业时间</div>
+                <div class="text-stone-400 space-y-1">
+                    <div>周一至周日</div>
+                    <div>09:00 - 22:00</div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="font-medium mb-6">关注我们</div>
+                <div class="flex gap-5 text-2xl">
+                    <i class="fab fa-weixin hover:text-amber-400 cursor-pointer"></i>
+                    <i class="fab fa-x-twitter hover:text-amber-400 cursor-pointer"></i>
+                    <i class="fab fa-instagram hover:text-amber-400 cursor-pointer"></i>
+                </div>
+                <div class="mt-12 text-xs text-stone-500">
+                    © 2026 悦动象限 版权所有
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tailwind script already loaded
+        
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+        
+        // Sample services
+        const services = [
+            { name: "一对一私教", price: "¥298", duration: "60分钟" },
+            { name: "HIIT 高强度间歇", price: "¥89", duration: "45分钟" },
+            { name: "瑜伽 & 核心力量", price: "¥129", duration: "60分钟" },
+        ];
+        
+        // Populate service selection
+        function populateServices() {
+            const container = document.getElementById('serviceSelect');
+            container.innerHTML = '';
+            
+            services.forEach((service, index) => {
+                const div = document.createElement('div');
+                div.className = `p-5 border rounded-2xl cursor-pointer flex justify-between items-center time-slot ${index === 0 ? 'selected' : ''}`;
+                div.innerHTML = `
+                    <div>
+                        <div class="font-medium">${service.name}</div>
+                        <div class="text-sm text-stone-500">${service.duration}</div>
+                    </div>
+                    <div class="font-semibold text-emerald-600">${service.price}</div>
+                `;
+                div.onclick = () => {
+                    document.querySelectorAll('#serviceSelect > div').forEach(el => el.classList.remove('selected'));
+                    div.classList.add('selected');
+                };
+                container.appendChild(div);
+            });
+        }
+        
+        // Time slots
+        const availableTimes = [
+            "09:00", "10:00", "11:00", "13:30", 
+            "14:30", "15:30", "16:30", "18:00", "19:30"
+        ];
+        
+        function populateTimeSlots() {
+            const container = document.getElementById('timeSlots');
+            container.innerHTML = '';
+            
+            availableTimes.forEach(time => {
+                const slot = document.createElement('button');
+                slot.className = `time-slot px-4 py-4 border border-stone-200 rounded-2xl text-center font-medium hover:border-emerald-600`;
+                slot.textContent = time;
+                slot.onclick = () => {
+                    document.querySelectorAll('#timeSlots button').forEach(s => s.classList.remove('selected', 'border-emerald-600'));
+                    slot.classList.add('selected', 'border-emerald-600');
+                };
+                container.appendChild(slot);
+            });
+        }
+        
+        // Form submit
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            
+            if (!name) {
+                alert('请输入您的姓名');
+                return;
+            }
+            
+            alert(`🎉 预约成功！\n\n亲爱的 ${name}，您的预约已提交。\n\n我们会在30分钟内通过电话确认。感谢您的信任！`);
+            
+            // Reset form
+            document.getElementById('bookingForm').reset();
+            
+            // Deselect times
+            document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+			setInterval(() => {
+			window.location.href = "index.html";
+			}, 3000);
+        }
+        
+        // Initialize
+        window.onload = function() {
+            populateServices();
+            populateTimeSlots();
+            
+            // Set default date to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const dateStr = tomorrow.toISOString().split('T')[0];
+            document.getElementById('dateInput').value = dateStr;
+        };
+        
+        // Make selectService global for inline onclick
+        window.selectService = function(btn) {
+            alert('服务已选中！请在预约表单中进一步确认。');
+        };
+    </script>
+</body>
 </html>
